@@ -8,6 +8,7 @@ const {unlikes} = require("./models/like")
 const Mongoose = require('mongoose')
 const singlepost = require('./Routes/singlepost')
 const comments = require('./Routes/comments')
+const auth = require('./middleware/auth')
 Mongoose.connect('mongodb://localhost:27017/my_blog', {useNewUrlParser: true});
 
 
@@ -44,7 +45,7 @@ app.post('/comments/:id', (req, res) => {
     comments(req, res)
 })
 
-app.post('/post', (req, res) => {
+app.post('/post', auth ,(req, res) => {
     newPost(req, res)
 })
 

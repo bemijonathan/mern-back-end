@@ -7,6 +7,7 @@ const UserSchema = new schema({
     stack: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     location: { type: String, required: true },
+    password: { type: String, required: true },
     website: String,
     date: { type: Date, required: true, default: Date.now },
     posts: [{
@@ -15,8 +16,11 @@ const UserSchema = new schema({
     comments: [{
         type: String
     }],
-    likes:[{
+    likes: [{
         type: String
+    }],
+    token:[{
+        type:Object,
     }]
 })
 

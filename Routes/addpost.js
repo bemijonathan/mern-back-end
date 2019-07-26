@@ -1,6 +1,7 @@
 const  Post = require('../models/post')
 
 const addPost = (req, res) => {
+    
     console.log(req.body)
     let new_post = new Post({
         content:req.body.content,
