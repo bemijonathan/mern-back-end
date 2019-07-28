@@ -3,6 +3,7 @@ const home = require('./Routes/home')
 const newPost = require('./Routes/addpost')
 const newUser = require('./Routes/newuser')
 const bodyParser = require('body-parser')
+const Login = require('./Routes/login')
 const {likes} = require("./models/like")
 const {unlikes} = require("./models/like")
 const Mongoose = require('mongoose')
@@ -29,11 +30,11 @@ app.get('/', (req, res) => {
     home(req, res)
 })
 
-app.post('/like/:id', (req, res) => {
+app.post('/like/:id', auth ,(req, res) => {
     likes(req, res)
 })
 
-app.delete('/like/:id', (req, res) => {
+app.delete('/like/:id', auth, (req, res) => {
     unlikes(req, res)
 })
 
@@ -41,7 +42,7 @@ app.get('/:id',(req, res) => {
     singlepost(req, res)
 })
 
-app.post('/comments/:id', (req, res) => {
+app.post('/comments/:id',auth, (req, res) => {
     comments(req, res)
 })
 
@@ -51,6 +52,10 @@ app.post('/post', auth ,(req, res) => {
 
 app.post('/user', (req, res) => {
     newUser(req, res)
+})
+
+app.post('/login', (req, res) => {
+    Login(req, res)
 })
 
 app.get('/user', (req, res) => {

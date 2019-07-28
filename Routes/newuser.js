@@ -18,13 +18,12 @@ const adduser = async (req, res) => {
         name:User.name,
         stack:User.stack,
         username:User.username,
-        location:User.location,
-        token:[]
+        location:User.location
     }
 
     let token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 600), data }, 'jonathansblog');
 
-    User.token.push({'auth': token})
+    User.token.auth = token
 
     try {
 

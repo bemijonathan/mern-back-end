@@ -19,9 +19,9 @@ const UserSchema = new schema({
     likes: [{
         type: String
     }],
-    token:[{
-        type:Object,
-    }]
+    token:{
+        auth:{type: String}
+    }
 })
 
 const User = Mongoose.model('User', UserSchema)
