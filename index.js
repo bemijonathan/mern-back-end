@@ -4,12 +4,13 @@ const newPost = require('./Routes/addpost')
 const newUser = require('./Routes/newuser')
 const bodyParser = require('body-parser')
 const Login = require('./Routes/login')
-const {likes} = require("./models/like")
-const {unlikes} = require("./models/like")
+const {likes} = require("./Routes/like")
+const {unlikes} = require("./Routes/like")
 const Mongoose = require('mongoose')
 const singlepost = require('./Routes/singlepost')
 const comments = require('./Routes/comments')
 const auth = require('./middleware/auth')
+const UserDetails = require('./Routes/user_details')
 Mongoose.connect('mongodb://localhost:27017/my_blog', {useNewUrlParser: true});
 
 
@@ -19,7 +20,7 @@ const app = express()
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, auth");
     next();
 });
 
@@ -42,7 +43,7 @@ app.get('/:id',(req, res) => {
     singlepost(req, res)
 })
 
-app.post('/comments/:id',auth, (req, res) => {
+app.post('/comments/:id', auth, (req, res) => {
     comments(req, res)
 })
 
@@ -58,8 +59,8 @@ app.post('/login', (req, res) => {
     Login(req, res)
 })
 
-app.get('/user', (req, res) => {
-
+app.get('/user/:id', (req, res) => {
+    UserDetails(req, res)
 })
 
 app.listen(3500, console.log('app is working'))

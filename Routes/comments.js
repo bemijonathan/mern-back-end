@@ -4,36 +4,32 @@ const Comment = require('../models/comments')
 
 
 
-const comments = async (req, res) => {
+const comments = (req, res) => {
 
     try {
-        
-    let newComment = new Comment({
-        content : req.body.content,
-        post_id: req.params.post_id
-    })
+        let newComment;
+        user.find({ token: { auth: req.headers.auth } }).then(usern => {
+            newComment = new Comment({
+                content: req.body.content,
+                post_id: req.params.id,
+                user: usern[0].username
+            })
 
-    let usertrue = {}
+            Post.findById(newComment.post_id).then(posttrue => {
+                console.log(posttrue, 'post')
+                posttrue.comment_id.push(newComment.id)
+                posttrue.save().then(() => {
+                    newComment.save().then(() => {
+                        res.send({
+                            message: 'added'
+                        })
+                    })
+                })
 
-    let posttrue  = {}
+            })
+        })
 
-    usertrue = await user.findById(req.headers.user)
-    if(usertrue){
-        usertrue.comments.push(newComment.id)
-    }
-       
-
-    posttrue = await Post.findById(req.params.id)
-    if(posttrue){
-        posttrue.comment_id.push(newComment.id)
-    }
-
-    if(posttrue !== {} && usertrue !== {} ){
-        await newComment.save()
-        res.send('newComment added')
-    
-    }
-    }catch(e){
+    } catch (e) {
         res.send('uniidentified user or post')
         console.log(e)
     }

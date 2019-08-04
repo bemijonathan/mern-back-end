@@ -4,25 +4,21 @@ const Comment = require('../models/comments')
 
 
 
-const singlepost = (req, res) => {
-    Post.findById(req.params.id).then(e => {
-        let ids = e.comment_id
-        let comment = []
+const singlepost = async (req, res) => {
+    try {
+        let gottenComments = await Comment.find({ post_id: req.params.id })
+        let findPost = await Post.findById(req.params.id)
 
-        ids.forEach(element => {
-            Comment.find({id:element}).then(e => {
-                comment = e
-            })
-        });
+        console.log(gottenComments)
 
-        
         res.send({
-            post:e,
-            comment
+            post: findPost,
+            commets: gottenComments
         })
-    },err =>{
-        console.log(err)
-    })
+    } catch (error) {
+        res.send(error)
+    }
+
 
 }
 

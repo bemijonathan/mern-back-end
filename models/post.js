@@ -9,7 +9,7 @@ const PostSchema = new schema({
     comment_id:[{
         type:String
     }],
-    User:String,
+    User_id:String,
     likes: [{type:String}]
 })
 

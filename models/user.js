@@ -10,15 +10,6 @@ const UserSchema = new schema({
     password: { type: String, required: true },
     website: String,
     date: { type: Date, required: true, default: Date.now },
-    posts: [{
-        type: String
-    }],
-    comments: [{
-        type: String
-    }],
-    likes: [{
-        type: String
-    }],
     token:{
         auth:{type: String}
     }
